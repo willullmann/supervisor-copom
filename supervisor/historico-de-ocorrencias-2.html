@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ocorrências</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+  <style>
+    /* Estilo personalizado para o tooltip */
+    .tooltip-inner {
+      background-color: #f8f9fa;
+      color: #212529;
+      border: 1px solid #6c757d;
+      padding: 10px;
+      max-width: 200px;
+      white-space: normal; /* Permitir quebra de linha no tooltip */
+    }
+
+    /* Modo noturno */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .navbar.dark-mode, .container.dark-mode {
+      background-color: #1f1f1f;
+      color: #ffffff;
+    }
+
+    .btn.dark-mode {
+      background-color: #343a40;
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .btn.dark-mode:hover {
+      background-color: #495057;
+      color: #ffffff;
+    }
+
+    .tooltip.dark-mode .tooltip-inner {
+      background-color: #343a40;
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    /* Ícone do botão de modo noturno */
+    .mode-toggle {
+      cursor: pointer;
+      font-size: 1.5rem; /* Tamanho ajustado do ícone */
+      margin-left: auto;
+      color: white;
+    }
+
+    /* Estilos para o título centralizado */
+    .navbar-brand-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem; /* Aumenta o tamanho do título */
+    }
+
+    /* Estilo da navbar */
+    .navbar {
+      height: 70px; /* Ajuste de altura para evitar problemas de exibição */
+    }
+
+    /* Estilos para o alerta */
+    .alert-top {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: none;
+    }
+
+    /* Estilos para o footer */
+    footer {
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    footer.dark-mode {
+      background-color: #1f1f1f;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar com título centralizado e botão de modo noturno -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid justify-content-between">
+      <h1 class="navbar-brand mb-0 navbar-brand-center">Ocorrências</h1>
+      <!-- Botão de alternância de modo -->
+      <span id="modeToggle" class="mode-toggle" onclick="toggleDarkMode()">
+        <i id="modeIcon" class="bi bi-moon"></i> <!-- Ícone de Lua (Modo Noturno) -->
+      </span>
+    </div>
+  </nav>
+
+  <!-- Alerta de cópia no topo -->
+  <div id="copyAlert" class="alert alert-success alert-top" role="alert">
+    Texto copiado com sucesso!
+  </div>
+
+  <!-- Container principal -->
+  <div class="container mt-4">
+    <div class="row mt-4">
+
+      <!-- Botão para INCIDENTE DE BRIGA EM VIA PÚBLICA -->
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="INCIDENTE DE BRIGA EM VIA PÚBLICA. ________, POR VOLTA DAS ________, OCORREU UMA BRIGA EM VIA PÚBLICA NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA INTERVIR NA SITUAÇÃO. NO LOCAL, CONSTATOU-SE QUE __________ INDIVÍDUOS ESTAVAM ENVOLVIDOS NA BRIGA. A SITUAÇÃO FOI CONTROLADA E OS ENVOLVIDOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA PROVIDÊNCIAS LEGAIS. NÃO HOUVE FERIDOS GRAVES."
+        onclick="copyText('INCIDENTE DE BRIGA EM VIA PÚBLICA. ________, POR VOLTA DAS ________, OCORREU UMA BRIGA EM VIA PÚBLICA NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA INTERVIR NA SITUAÇÃO. NO LOCAL, CONSTATOU-SE QUE __________ INDIVÍDUOS ESTAVAM ENVOLVIDOS NA BRIGA. A SITUAÇÃO FOI CONTROLADA E OS ENVOLVIDOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA PROVIDÊNCIAS LEGAIS. NÃO HOUVE FERIDOS GRAVES.')">
+        INCIDENTE DE BRIGA EM VIA PÚBLICA
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="APREENSÃO DE ENTORPECENTES. ________, DURANTE PATRULHAMENTO NA ÁREA DA LOCALIDADE DE ______________, A EQUIPE DA VIATURA ________, ABORDOU UM INDIVÍDUO EM ATITUDE SUSPEITA. AO REALIZAR REVISTA PESSOAL, FOI ENCONTRADA UMA QUANTIDADE DE __________ SUBSTÂNCIA SEMELHANTE A ENTORPECENTE. O SUSPEITO FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS CABÍVEIS."
+        onclick="copyText('APREENSÃO DE ENTORPECENTES. ________, DURANTE PATRULHAMENTO NA ÁREA DA LOCALIDADE DE ______________, A EQUIPE DA VIATURA ________, ABORDOU UM INDIVÍDUO EM ATITUDE SUSPEITA. AO REALIZAR REVISTA PESSOAL, FOI ENCONTRADA UMA QUANTIDADE DE __________ SUBSTÂNCIA SEMELHANTE A ENTORPECENTE. O SUSPEITO FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS CABÍVEIS.')">
+        APREENSÃO DE ENTORPECENTES
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ACIDENTE DE TRÂNSITO COM VÍTIMA. ________, POR VOLTA DAS ________, OCORREU UM ACIDENTE DE TRÂNSITO ENVOLVENDO UM VEÍCULO __________ DE COR __________, PLACAS __________, E UM VEÍCULO __________ DE COR __________, PLACAS __________. A UR/SAMU ________ FOI ACIONADA PARA PRESTAR SOCORRO. NO LOCAL, CONSTATOU-SE QUE O CONDUTOR DO VEÍCULO __________ SOFREU FERIMENTOS LEVES E FOI ENCAMINHADO AO PRONTO-SOCORRO __________ PARA ATENDIMENTO MÉDICO. PARTES E VEÍCULOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS CABÍVEIS."
+        onclick="copyText('ACIDENTE DE TRÂNSITO COM VÍTIMA. ________, POR VOLTA DAS ________, OCORREU UM ACIDENTE DE TRÂNSITO ENVOLVENDO UM VEÍCULO __________ DE COR __________, PLACAS __________, E UM VEÍCULO __________ DE COR __________, PLACAS __________. A UR/SAMU ________ FOI ACIONADA PARA PRESTAR SOCORRO. NO LOCAL, CONSTATOU-SE QUE O CONDUTOR DO VEÍCULO __________ SOFREU FERIMENTOS LEVES E FOI ENCAMINHADO AO PRONTO-SOCORRO __________ PARA ATENDIMENTO MÉDICO. PARTES E VEÍCULOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS CABÍVEIS.')">
+        ACIDENTE DE TRÂNSITO COM VÍTIMA
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="AGRESSÃO DOMÉSTICA. ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE AGRESSÃO DOMÉSTICA NA RESIDÊNCIA LOCALIZADA EM ______________. NO LOCAL, A VÍTIMA __________ INFORMOU TER SIDO AGREDIDA PELO SEU COMPANHEIRO __________. O AGRESSOR FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS. A VÍTIMA RECEBEU ATENDIMENTO MÉDICO E FOI ORIENTADA SOBRE OS PROCEDIMENTOS CABÍVEIS."
+        onclick="copyText('AGRESSÃO DOMÉSTICA. ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE AGRESSÃO DOMÉSTICA NA RESIDÊNCIA LOCALIZADA EM ______________. NO LOCAL, A VÍTIMA __________ INFORMOU TER SIDO AGREDIDA PELO SEU COMPANHEIRO __________. O AGRESSOR FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS. A VÍTIMA RECEBEU ATENDIMENTO MÉDICO E FOI ORIENTADA SOBRE OS PROCEDIMENTOS CABÍVEIS.')">
+        AGRESSÃO DOMÉSTICA
+        </button>
+      </div>
+
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="FURTO EM ESTABELECIMENTO COMERCIAL. ________, CONSTATOU-SE UM FURTO NO ESTABELECIMENTO COMERCIAL ______________ LOCALIZADO NA RUA ______________. A EQUIPE DA VIATURA ________ PELO LOCAL FOI SOLICITADO A PERÍCIA. PERÍCIA NO LOCAL COLETOU INFORMAÇÕES SOBRE O OCORRIDO. O(S) AUTOR(ES) ARROMBOU(ARAM) A PORTA DO ESTABELECIMENTO E SUBTRAIU(RAM) DIVERSOS OBJETOS, COMO __________. A OCORRÊNCIA FOI REGISTRADA E AS INVESTIGAÇÕES ESTÃO EM ANDAMENTO."
+        onclick="copyText('FURTO EM ESTABELECIMENTO COMERCIAL. ________, CONSTATOU-SE UM FURTO NO ESTABELECIMENTO COMERCIAL ______________ LOCALIZADO NA RUA ______________. A EQUIPE DA VIATURA ________ PELO LOCAL FOI SOLICITADO A PERÍCIA. PERÍCIA NO LOCAL COLETOU INFORMAÇÕES SOBRE O OCORRIDO. O(S) AUTOR(ES) ARROMBOU(ARAM) A PORTA DO ESTABELECIMENTO E SUBTRAIU(RAM) DIVERSOS OBJETOS, COMO __________. A OCORRÊNCIA FOI REGISTRADA E AS INVESTIGAÇÕES ESTÃO EM ANDAMENTO.')">
+        FURTO EM ESTAB. COMERCIAL
+        </button>
+      </div>
+
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="PANCADÃO. ________, POR VOLTA DAS ________, FOI CONSTATADA A REALIZAÇÃO DE UM PANCADÃO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A PERTURBAÇÃO DO SOSSEGO PÚBLICO CAUSADA PELO EVENTO. NO LOCAL, HAVIA UM GRANDE NÚMERO DE PESSOAS, SOM ALTO E CONSUMO DE BEBIDAS ALCOÓLICAS. A SITUAÇÃO FOI CONTROLADA E A ORGANIZAÇÃO DO EVENTO FOI DISPERSA. FORAM TOMADAS AS MEDIDAS CABÍVEIS PARA COIBIR FUTURAS OCORRÊNCIAS."
+        onclick="copyText('PANCADÃO. ________, POR VOLTA DAS ________, FOI CONSTATADA A REALIZAÇÃO DE UM PANCADÃO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A PERTURBAÇÃO DO SOSSEGO PÚBLICO CAUSADA PELO EVENTO. NO LOCAL, HAVIA UM GRANDE NÚMERO DE PESSOAS, SOM ALTO E CONSUMO DE BEBIDAS ALCOÓLICAS. A SITUAÇÃO FOI CONTROLADA E A ORGANIZAÇÃO DO EVENTO FOI DISPERSA. FORAM TOMADAS AS MEDIDAS CABÍVEIS PARA COIBIR FUTURAS OCORRÊNCIAS.')">
+        PANCADÃO
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="PERTURBAÇÃO DE SOSSEGO PÚBLICO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE PERTURBAÇÃO DE SOSSEGO PÚBLICO NA RESIDÊNCIA LOCALIZADA EM ______________. NO LOCAL, CONSTATOU-SE QUE HAVIA UM SOM ALTO E AGLOMERAÇÃO DE PESSOAS CAUSANDO INCÔMODO AOS MORADORES VIZINHOS. A SITUAÇÃO FOI CONTROLADA, E OS RESPONSÁVEIS FORAM ORIENTADOS A REDUZIR O VOLUME DO SOM."
+        onclick="copyText('PERTURBAÇÃO DE SOSSEGO PÚBLICO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE PERTURBAÇÃO DE SOSSEGO PÚBLICO NA RESIDÊNCIA LOCALIZADA EM ______________. NO LOCAL, CONSTATOU-SE QUE HAVIA UM SOM ALTO E AGLOMERAÇÃO DE PESSOAS CAUSANDO INCÔMODO AOS MORADORES VIZINHOS. A SITUAÇÃO FOI CONTROLADA, E OS RESPONSÁVEIS FORAM ORIENTADOS A REDUZIR O VOLUME DO SOM.')">
+        PERTURBAÇÃO DE SOSSEGO PÚBLICO
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="AUTO DE PRISÃO EM FLAGRANTE DELITO DE POLICIAL REFORMADO - EMBRIAGUEZ AO VOLANTE. ________, POR VOLTA DAS ________, O POLICIAL REFORMADO __________, LOTADO ANTERIORMENTE NO ________, FOI FLAGRADO DIRIGINDO EMBRIAGADO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), REALIZOU A ABORDAGEM E CONSTATOU SINAIS DE EMBRIAGUEZ. FOI REALIZADO O TESTE DO BAFÔMETRO, QUE APRESENTOU RESULTADO POSITIVO. DIANTE DOS FATOS, O POLICIAL REFORMADO FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS."
+        onclick="copyText('AUTO DE PRISÃO EM FLAGRANTE DELITO DE POLICIAL REFORMADO - EMBRIAGUEZ AO VOLANTE. ________, POR VOLTA DAS ________, O POLICIAL REFORMADO __________, LOTADO ANTERIORMENTE NO ________, FOI FLAGRADO DIRIGINDO EMBRIAGADO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), REALIZOU A ABORDAGEM E CONSTATOU SINAIS DE EMBRIAGUEZ. FOI REALIZADO O TESTE DO BAFÔMETRO, QUE APRESENTOU RESULTADO POSITIVO. DIANTE DOS FATOS, O POLICIAL REFORMADO FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS.')">
+        EMBRIAGUEZ AO VOLANTE
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="VIOLÊNCIA DOMÉSTICA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE VIOLÊNCIA DOMÉSTICA NA RESIDÊNCIA LOCALIZADA EM ______________. A VÍTIMA __________ INFORMOU TER SIDO AGREDIDA PELO SEU PARCEIRO __________. O AGRESSOR FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS. A VÍTIMA RECEBEU APOIO E ORIENTAÇÃO QUANTO AOS SEUS DIREITOS."
+        onclick="copyText('VIOLÊNCIA DOMÉSTICA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE VIOLÊNCIA DOMÉSTICA NA RESIDÊNCIA LOCALIZADA EM ______________. A VÍTIMA __________ INFORMOU TER SIDO AGREDIDA PELO SEU PARCEIRO __________. O AGRESSOR FOI DETIDO E CONDUZIDO À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS. A VÍTIMA RECEBEU APOIO E ORIENTAÇÃO QUANTO AOS SEUS DIREITOS.')">
+        VIOLÊNCIA DOMÉSTICA
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="TENTATIVA DE ROUBO A POLICIAL MILITAR. ________, POR VOLTA DAS ________, O POLICIAL MILITAR __________, LOTADO NO ________, ESTAVA DE FOLGA/IN ITINERE, TRAJANDO __________, QUANDO FOI ALVO DE UMA TENTATIVA DE ROUBO POR __________ INDIVÍDUOS ARMADOS. O POLICIAL REAGIU, HOUVE TROCA DE TIROS E OS SUSPEITOS SE EVADIRAM DO LOCAL. UM DOS INDIVÍDUOS FOI FERIDO NA REGIÃO __________ E FOI SOCORRIDO PELA UR __________ AO PRONTO SOCORRO __________ / E ENTROU EM ÓBITO NO LOCAL. COP ESTAVAM LIGADAS, INDIVÍDUO POSSUÍA CRIMINAL NO ARTIGO 157 EM 2022 E 121 EM 2023."
+        onclick="copyText('TENTATIVA DE ROUBO A POLICIAL MILITAR. ________, POR VOLTA DAS ________, O POLICIAL MILITAR __________, LOTADO NO ________, ESTAVA DE FOLGA/IN ITINERE, TRAJANDO __________, QUANDO FOI ALVO DE UMA TENTATIVA DE ROUBO POR __________ INDIVÍDUOS ARMADOS. O POLICIAL REAGIU, HOUVE TROCA DE TIROS E OS SUSPEITOS SE EVADIRAM DO LOCAL. UM DOS INDIVÍDUOS FOI FERIDO NA REGIÃO __________ E FOI SOCORRIDO PELA UR __________ AO PRONTO SOCORRO __________ / E ENTROU EM ÓBITO NO LOCAL. COP ESTAVAM LIGADAS, INDIVÍDUO POSSUÍA CRIMINAL NO ARTIGO 157 EM 2022 E 121 EM 2023.')">
+        TENT DE ROUBO POLICIAL MILITAR
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ACIDENTE DE TRÂNSITO ENVOLVENDO VIATURA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), ENVOLVEU-SE EM UM ACIDENTE DE TRÂNSITO COM UM VEÍCULO __________ DE COR __________, PLACAS __________. O ACIDENTE OCORREU DURANTE APOIO A __________ / ACOMPANHAMENTO AO VEÍCULO __________, PLACAS __________. NÃO HOUVE VÍTIMAS GRAVES. DANOS DE PEQUENA/MÉDIA MONTA. O ACIDENTE FOI REGISTRADO PARA AS DEVIDAS PROVIDÊNCIAS."
+        onclick="copyText('ACIDENTE DE TRÂNSITO ENVOLVENDO VIATURA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), ENVOLVEU-SE EM UM ACIDENTE DE TRÂNSITO COM UM VEÍCULO __________ DE COR __________, PLACAS __________. O ACIDENTE OCORREU DURANTE APOIO A __________ / ACOMPANHAMENTO AO VEÍCULO __________, PLACAS __________. NÃO HOUVE VÍTIMAS GRAVES. DANOS DE PEQUENA/MÉDIA MONTA. O ACIDENTE FOI REGISTRADO PARA AS DEVIDAS PROVIDÊNCIAS.')">
+        ACID DE TRÂNSITO ENVOLVENDO VTR 
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ACIDENTE DE TRÂNSITO COM POLICIAL DE FOLGA – FARDADO/CIVILMENTE TRAJADO. ________, POR VOLTA DAS ________, O POLICIAL __________, LOTADO NO ________, ESTAVA DE FOLGA, TRAJANDO FARDA/CIVILMENTE TRAJADO, QUANDO SE ENVOLVEU EM UM ACIDENTE DE TRÂNSITO COM O VEÍCULO __________ DE COR __________, PLACAS __________. O POLICIAL SOFREU __________ E FOI SOCORRIDO AO P.S. __________ PELA UR __________. O ACIDENTE OCORREU NA LOCALIDADE DE __________."
+        onclick="copyText('ACIDENTE DE TRÂNSITO COM POLICIAL DE FOLGA – FARDADO/CIVILMENTE TRAJADO. ________, POR VOLTA DAS ________, O POLICIAL __________, LOTADO NO ________, ESTAVA DE FOLGA, TRAJANDO FARDA/CIVILMENTE TRAJADO, QUANDO SE ENVOLVEU EM UM ACIDENTE DE TRÂNSITO COM O VEÍCULO __________ DE COR __________, PLACAS __________. O POLICIAL SOFREU __________ E FOI SOCORRIDO AO P.S. __________ PELA UR __________. O ACIDENTE OCORREU NA LOCALIDADE DE __________.')">
+        AC DE TRÂNSITO POLICIAL DE FOLGA
+        </button>
+      </div>
+      
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="DESINTELIGÊNCIA COM VIAS DE FATO ENVOLVENDO POLICIAL MILITAR. ________, POR VOLTA DAS ________, OCORREU UMA DESINTELIGÊNCIA COM VIAS DE FATO ENTRE O POLICIAL MILITAR __________, LOTADO NO ________, E O INDIVÍDUO __________ NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA INTERVIR. OS ENVOLVIDOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS."
+        onclick="copyText('DESINTELIGÊNCIA COM VIAS DE FATO ENVOLVENDO POLICIAL MILITAR. ________, POR VOLTA DAS ________, OCORREU UMA DESINTELIGÊNCIA COM VIAS DE FATO ENTRE O POLICIAL MILITAR __________, LOTADO NO ________, E O INDIVÍDUO __________ NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA INTERVIR. OS ENVOLVIDOS FORAM CONDUZIDOS À DELEGACIA DE POLÍCIA PARA AS PROVIDÊNCIAS LEGAIS.')">
+        DESINTELIGÊNCIA VIAS FATO ENV PM
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="MANIFESTAÇÃO PÚBLICA.  MANIFESTAÇÃO PÚBLICA DOS __________, EM __________ / A FAVOR __________. ATÉ O MOMENTO, A SITUAÇÃO ESTÁ PACÍFICA / NÃO ESTÁ PACÍFICO. O GRUPO PERMANECE NO LOCAL / O GRUPO IRÁ SE DESLOCAR PARA __________. NÃO/OU HÁ INTERDIÇÃO DE VIA. A SITUAÇÃO FOI ACOMPANHADA PELA EQUIPE DA VIATURA ________."
+        onclick="copyText('MANIFESTAÇÃO PÚBLICA.  MANIFESTAÇÃO PÚBLICA DOS __________, EM __________ / A FAVOR __________. ATÉ O MOMENTO, A SITUAÇÃO ESTÁ PACÍFICA / NÃO ESTÁ PACÍFICO. O GRUPO PERMANECE NO LOCAL / O GRUPO IRÁ SE DESLOCAR PARA __________. NÃO/OU HÁ INTERDIÇÃO DE VIA. A SITUAÇÃO FOI ACOMPANHADA PELA EQUIPE DA VIATURA ________.')">
+        MANIFESTAÇÃO PÚBLICA
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="SUICÍDIO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE SUICÍDIO NA LOCALIDADE DE ______________. FOI CONSTATADO O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL FOI ISOLADO PARA A REALIZAÇÃO DA PERÍCIA."
+        onclick="copyText('SUICÍDIO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE SUICÍDIO NA LOCALIDADE DE ______________. FOI CONSTATADO O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL FOI ISOLADO PARA A REALIZAÇÃO DA PERÍCIA.')">
+        SUICÍDIO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="DESMORONAMENTO. ________, POR VOLTA DAS ________, OCORREU UM DESMORONAMENTO EM ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA PRESTAR AUXÍLIO NO LOCAL. FORAM ACIONADOS OS ÓRGÃOS COMPETENTES PARA AVALIAÇÃO E AÇÕES DE RESGATE."
+        onclick="copyText('DESMORONAMENTO. ________, POR VOLTA DAS ________, OCORREU UM DESMORONAMENTO EM ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA PRESTAR AUXÍLIO NO LOCAL. FORAM ACIONADOS OS ÓRGÃOS COMPETENTES PARA AVALIAÇÃO E AÇÕES DE RESGATE.')">
+        DESMORONAMENTO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ENCHENTE. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE ENCHENTE NA LOCALIDADE DE ______________. A SITUAÇÃO ESTAVA AFETANDO A CIRCULAÇÃO DE VEÍCULOS E CAUSANDO TRANSTORNOS. A EQUIPE PRESTOU AUXÍLIO AOS MORADORES JUNTAMENTE COM AS UNIDADES DOS BOMBEIROS ________ E ADOTOU MEDIDAS PARA MINIMIZAR OS IMPACTOS."
+        onclick="copyText('ENCHENTE. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE ENCHENTE NA LOCALIDADE DE ______________. A SITUAÇÃO ESTAVA AFETANDO A CIRCULAÇÃO DE VEÍCULOS E CAUSANDO TRANSTORNOS. A EQUIPE PRESTOU AUXÍLIO AOS MORADORES JUNTAMENTE COM AS UNIDADES DOS BOMBEIROS ________ E ADOTOU MEDIDAS PARA MINIMIZAR OS IMPACTOS.')">
+        ENCHENTE
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="DISPARO DE ARMA DE FOGO. ________, POR VOLTA DAS ________, OCORREU UM DISPARO DE ARMA DE FOGO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A SITUAÇÃO. FOI CONSTATADO O DISPARO, MAS NÃO HOUVE VÍTIMAS. O LOCAL FOI VERIFICADO E OS DADOS FORAM ENCAMINHADOS AO DP."
+        onclick="copyText('DISPARO DE ARMA DE FOGO. ________, POR VOLTA DAS ________, OCORREU UM DISPARO DE ARMA DE FOGO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A SITUAÇÃO. FOI CONSTATADO O DISPARO, MAS NÃO HOUVE VÍTIMAS. O LOCAL FOI VERIFICADO E OS DADOS FORAM ENCAMINHADOS AO DP.')">
+        DISPARO DE ARMA DE FOGO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="MORTE DECORRENTE DE INTERVENÇÃO MILITAR - DISPAROS DE ARMA DE FOGO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE _____________ QUANDO HOUVE A INTERVENÇÃO MILITAR COM DISPAROS DE ARMA DE FOGO NA LOCALIDADE DE ______________. NO LOCAL, O MÉDICO ___________ CONSTATOU O ÓBITO DO INDIVÍDUO __________ POR DISPAROS EFETUADOS PELA EQUIPE DURANTE A INTERVENÇÃO. COP ESTAVA LIGADA E INDIVÍDUO POSSUÍA CRIMINAL POR 121 EM 2023. A OCORRÊNCIA SERÁ APRESENTADA NO DP."
+        onclick="copyText('MORTE DECORRENTE DE INTERVENÇÃO MILITAR - DISPAROS DE ARMA DE FOGO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), FOI ACIONADA PARA ATENDER A UMA OCORRÊNCIA DE _____________ QUANDO HOUVE A INTERVENÇÃO MILITAR COM DISPAROS DE ARMA DE FOGO NA LOCALIDADE DE ______________. NO LOCAL, O MÉDICO ___________ CONSTATOU O ÓBITO DO INDIVÍDUO __________ POR DISPAROS EFETUADOS PELA EQUIPE DURANTE A INTERVENÇÃO. COP ESTAVA LIGADA E INDIVÍDUO POSSUÍA CRIMINAL POR 121 EM 2023. A OCORRÊNCIA SERÁ APRESENTADA NO DP.')">
+        MORTE DEC DE INTERVENÇÃO MILITAR 
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ACOMPANHAMENTO/RESISTÊNCIA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), REALIZOU UM ACOMPANHAMENTO A UM VEÍCULO __________ DE COR __________, PLACAS __________, APÓS A ABORDAGEM TER SIDO DESOBEDECIDA. HOUVE RESISTÊNCIA POR PARTE DO CONDUTOR, QUE TENTOU FUGIR. FOI NECESSÁRIO O USO DE MEIOS MODERADOS E TÉCNICAS NÃO LETAIS PARA EFETUAR A PRISÃO."
+        onclick="copyText('ACOMPANHAMENTO/RESISTÊNCIA. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, COMPOSTA PELO ENCARREGADO PM (RE E NOME COMPLETO) E MOTORISTA PM (RE E NOME COMPLETO), REALIZOU UM ACOMPANHAMENTO A UM VEÍCULO __________ DE COR __________, PLACAS __________, APÓS A ABORDAGEM TER SIDO DESOBEDECIDA. HOUVE RESISTÊNCIA POR PARTE DO CONDUTOR, QUE TENTOU FUGIR. FOI NECESSÁRIO O USO DE MEIOS MODERADOS E TÉCNICAS NÃO LETAIS PARA EFETUAR A PRISÃO.')">
+        ACOMPANHAMENTO/RESISTÊNCIA
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="DANO AO PATRIMÔNIO PÚBLICO. ________, POR VOLTA DAS ________, FOI CONSTATADO UM DANO AO PATRIMÔNIO PÚBLICO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ REALIZOU A VERIFICAÇÃO DO LOCAL E IDENTIFICOU DANOS EM __________. DADOS FORAM ENCAMINHADOS AO DP E REGISTRADA A OCORRÊNCIA."
+        onclick="copyText('DANO AO PATRIMÔNIO PÚBLICO. ________, POR VOLTA DAS ________, FOI CONSTATADO UM DANO AO PATRIMÔNIO PÚBLICO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ REALIZOU A VERIFICAÇÃO DO LOCAL E IDENTIFICOU DANOS EM __________. DADOS FORAM ENCAMINHADOS AO DP E REGISTRADA A OCORRÊNCIA.')">
+        DANO AO PATRIMÔNIO PÚBLICO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="AUTO LESÃO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE AUTO LESÃO NA LOCALIDADE DE ______________. O INDIVÍDUO __________ CAUSOU FERIMENTOS A SI MESMO POR MEIO DE __________. O INDIVÍDUO FOI SOCORRIDO PELA UR __________ AO PRONTO SOCORRO __________ PARA ATENDIMENTO MÉDICO E ACOMPANHAMENTO PSICOLÓGICO."
+        onclick="copyText('AUTO LESÃO. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER UMA OCORRÊNCIA DE AUTO LESÃO NA LOCALIDADE DE ______________. O INDIVÍDUO __________ CAUSOU FERIMENTOS A SI MESMO POR MEIO DE __________. O INDIVÍDUO FOI SOCORRIDO PELA UR __________ AO PRONTO SOCORRO __________ PARA ATENDIMENTO MÉDICO E ACOMPANHAMENTO PSICOLÓGICO.')">
+        AUTO LESÃO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="HOMICÍDIO. ________, POR VOLTA DAS ________, OCORREU UM HOMICÍDIO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A SITUAÇÃO. NO LOCAL, FOI CONSTATADO O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL DOS FATOS FOI PRESERVADO PELA EQUIPE DA VIATURA ______________ QUE FICARÁ AGUARDANDO A PERÍCIA E O CARRO DE CADÁVER ENQUANTO QUE A EQUIPE TITULAR DA OCORRÊNCIA APRESENTA DADOS AO DP."
+        onclick="copyText('HOMICÍDIO. ________, POR VOLTA DAS ________, OCORREU UM HOMICÍDIO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA VERIFICAR A SITUAÇÃO. NO LOCAL, FOI CONSTATADO O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL DOS FATOS FOI PRESERVADO PELA EQUIPE DA VIATURA ______________ QUE FICARÁ AGUARDANDO A PERÍCIA E O CARRO DE CADÁVER ENQUANTO QUE A EQUIPE TITULAR DA OCORRÊNCIA APRESENTA DADOS AO DP.')">
+        HOMICÍDIO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="LATROCÍNIO. ________, POR VOLTA DAS ________, OCORREU UM LATROCÍNIO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA FOI ACIONADA PARA ATENDER A OCORRÊNCIA. A VÍTIMA __________ FOI ALVO DE UM ROUBO SEGUIDO DE MORTE POR __________. A OCORRÊNCIA FOI REGISTRADA E SERÁ INVESTIGADA PELAS AUTORIDADES COMPETENTES."
+        onclick="copyText('LATROCÍNIO. ________, POR VOLTA DAS ________, OCORREU UM LATROCÍNIO NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA FOI ACIONADA PARA ATENDER A OCORRÊNCIA. A VÍTIMA __________ FOI ALVO DE UM ROUBO SEGUIDO DE MORTE POR __________. A OCORRÊNCIA FOI REGISTRADA E SERÁ INVESTIGADA PELAS AUTORIDADES COMPETENTES.')">
+        LATROCÍNIO
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="ENCONTRO DE CADÁVER. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A OCORRÊNCIA DE ENCONTRO DE CADÁVER NA LOCALIDADE DE ______________. NO LOCAL, O MÉDICO DA USA/SAMU CONSTATOU O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL DA OCORRÊNCIA FOI PRESERVADO PELA EQUIPE DA VIATURA _____________ QUE AGUARDA A PERÍCIA ENQUANTO A VIATURA TITULAR DA OCORRÊNCIA APRESENTA OCORRÊNCIA NO DP."
+        onclick="copyText('ENCONTRO DE CADÁVER. ________, POR VOLTA DAS ________, A EQUIPE DA VIATURA ________, FOI ACIONADA PARA ATENDER A OCORRÊNCIA DE ENCONTRO DE CADÁVER NA LOCALIDADE DE ______________. NO LOCAL, O MÉDICO DA USA/SAMU CONSTATOU O ÓBITO DA VÍTIMA __________ POR __________. O LOCAL DA OCORRÊNCIA FOI PRESERVADO PELA EQUIPE DA VIATURA _____________ QUE AGUARDA A PERÍCIA ENQUANTO A VIATURA TITULAR DA OCORRÊNCIA APRESENTA OCORRÊNCIA NO DP.')">
+        ENCONTRO DE CADÁVER
+        </button>
+      </div>
+
+      <div class="col-3 mt-3">
+        <button class="btn btn-outline-primary w-100 mb-3" 
+        data-bs-toggle="tooltip" data-bs-placement="top" 
+        title="QUEDA DE MOTOCICLETA. ________, POR VOLTA DAS ________, OCORREU UMA QUEDA DE MOTOCICLETA NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA PRESTAR SOCORRO. O CONDUTOR DA MOTOCICLETA __________ SOFREU __________ E FOI SOCORRIDO AO P.S. __________ PELA UR___________."
+        onclick="copyText('QUEDA DE MOTOCICLETA. ________, POR VOLTA DAS ________, OCORREU UMA QUEDA DE MOTOCICLETA NA LOCALIDADE DE ______________. A EQUIPE DA VIATURA ________ FOI ACIONADA PARA PRESTAR SOCORRO. O CONDUTOR DA MOTOCICLETA __________ SOFREU __________ E FOI SOCORRIDO AO P.S. __________ PELA UR___________.')">
+        QUEDA DE MOTOCICLETA
+        </button>
+      </div>
+
+
+
+      <!-- Adicionar outros botões da mesma forma -->
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer">
+    Desenvolvido pelo Sgt Ullmann, equipe Bravo - <span id="year"></span>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    function copyText(content) {
+      var tempInput = document.createElement("textarea");
+      tempInput.value = content;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      
+      // Mostrar alerta de cópia
+      var alertBox = document.getElementById('copyAlert');
+      alertBox.style.display = 'block';
+
+      // Esconder alerta automaticamente após 3 segundos
+      setTimeout(function() {
+        alertBox.style.display = 'none';
+      }, 3000);
+    }
+
+    // Inicializar tooltips
+    document.addEventListener('DOMContentLoaded', function () {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    });
+
+    // Alternar modo noturno
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      document.querySelector('.navbar').classList.toggle('dark-mode');
+      document.querySelector('.container').classList.toggle('dark-mode');
+      document.getElementById('footer').classList.toggle('dark-mode');
+
+      // Alterar ícones de claro e escuro
+      const modeIcon = document.getElementById('modeIcon');
+      if (document.body.classList.contains('dark-mode')) {
+        modeIcon.classList.replace('bi-moon', 'bi-brightness-high');
+      } else {
+        modeIcon.classList.replace('bi-brightness-high', 'bi-moon');
+      }
+
+      // Alternar as classes dos botões
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.classList.toggle('dark-mode');
+      });
+
+      // Alternar o modo do tooltip
+      document.querySelectorAll('.tooltip').forEach(tooltip => {
+        tooltip.classList.toggle('dark-mode');
+      });
+    }
+
+    // Adicionar ano atual ao footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
